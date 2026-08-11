@@ -1,0 +1,63 @@
+.stats-section {
+  margin: 0 35px 25px;
+
+  min-height: 125px;
+
+  background-color: #6b2f52;
+
+  border-radius: 15px;
+
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+
+  align-items: center;
+}
+
+.stat {
+  height: 65%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 20px;
+
+  border-right: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.stat:last-child {
+  border-right: none;
+}
+
+.stat-icon {
+  width: 60px;
+  height: 60px;
+
+  border-radius: 50%;
+
+  background-color: rgba(255, 255, 255, 0.13);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: white;
+
+  font-size: 25px;
+}
+
+.stat h3 {
+  margin: 0;
+
+  color: white;
+
+  font-size: 31px;
+}
+
+.stat p {
+  margin: 4px 0 0;
+
+  color: white;
+
+  font-size: 14px;
+}

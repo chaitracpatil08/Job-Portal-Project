@@ -1,0 +1,124 @@
+.navbar {
+  height: 90px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #eee7eb;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 40px;
+  box-sizing: border-box;
+}
+
+/* Logo */
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  color: #4d244d;
+  font-size: 25px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.logo-icon {
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: #63335f;
+  color: white;
+
+  border-radius: 5px;
+
+  font-size: 23px;
+}
+
+/* Navigation */
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 48px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #1f1b20;
+
+  font-size: 16px;
+  font-weight: 500;
+
+  padding: 8px 0;
+  white-space: nowrap;
+}
+
+.nav-links a:hover {
+  color: #6b2f52;
+}
+
+.nav-links .active {
+  color: #6b2f52;
+  border-bottom: 2px solid #6b2f52;
+}
+
+/* Authentication Buttons */
+
+.nav-buttons {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.login-btn,
+.register-btn {
+  height: 48px;
+  padding: 0 30px;
+
+  border-radius: 9px;
+
+  font-size: 16px;
+  font-weight: 500;
+
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  text-decoration: none;
+  box-sizing: border-box;
+
+  white-space: nowrap;
+}
+
+/* Login */
+
+.login-btn {
+  background-color: white;
+  color: #6b2f52;
+  border: 1px solid #6b2f52;
+}
+
+.login-btn:hover {
+  background-color: #faf3f8;
+}
+
+/* Register */
+
+.register-btn {
+  background-color: #6b2f52;
+  color: white;
+  border: 1px solid #6b2f52;
+}
+
+.register-btn:hover {
+  background-color: #582542;
+}
+

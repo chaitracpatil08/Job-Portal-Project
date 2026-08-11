@@ -1,5 +1,11 @@
+import "./Footer.css";
+
 function Footer() {
-  return <h1>Hero</h1>;
+  return (
+    <footer className="footer">
+      <p>© 2026 JobPortal. All rights reserved.</p>
+    </footer>
+  );
 }
 
 export default Footer;

@@ -19,7 +19,7 @@ function Navbar() {
 
         <Link to="/jobs">Jobs</Link>
 
-        <a href="#">Companies</a>
+       <Link to="/companies">Companies</Link>
         <a href="#">About Us</a>
         <a href="#">Contact</a>
       </div>

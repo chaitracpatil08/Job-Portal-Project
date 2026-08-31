@@ -1,3 +1,5 @@
+import { Link } from
+"react-router-dom";
 <Link to="/company-details/google" className="company-btn">
   View Company
 </Link>

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Login.css";
 
 function Login() {
@@ -7,36 +7,39 @@ function Login() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
+  const navigate = useNavigate();
+
   const handleSubmit = (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  setError("");
+    setError("");
 
-  if (!email && !password) {
-    setError("Please enter your email address and password.");
-    return;
-  }
+    if (!email && !password) {
+      setError("Please enter your email address and password.");
+      return;
+    }
 
-  if (!email) {
-    setError("Please enter your email address.");
-    return;
-  }
+    if (!email) {
+      setError("Please enter your email address.");
+      return;
+    }
 
-  if (!password) {
-    setError("Please enter your password.");
-    return;
-  }
+    if (!password) {
+      setError("Please enter your password.");
+      return;
+    }
 
-  if (!email.includes("@")) {
-    setError("Please enter a valid email address.");
-    return;
-  }
+    if (!email.includes("@")) {
+      setError("Please enter a valid email address.");
+      return;
+    }
 
-  alert("Login successful!");
+    // Login successful
+    alert("Login successful!");
 
-  console.log("Email:", email);
-  console.log("Password:", password);
-};
+    // Go to Dashboard
+    navigate("/dashboard");
+  };
 
   return (
     <div className="auth-page">

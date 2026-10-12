@@ -14,6 +14,7 @@ import Contact from "./pages/contact/Contact";
 import CandidateDashboard from "./pages/dashboard/CandidateDashboard";
 import EmployerDashboard from "./pages/dashboard/EmployerDashboard";
 import AdminDashboard from "./pages/admin/AdminDashboard";
+import Profile from "./pages/profile/Profile";
 
 function App() {
   return (
@@ -45,6 +46,14 @@ function App() {
             element={
               <ProtectedRoute allowedRoles={["jobseeker", "candidate"]}>
                 <CandidateDashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute allowedRoles={["jobseeker", "candidate"]}>
+                <Profile />
               </ProtectedRoute>
             }
           />

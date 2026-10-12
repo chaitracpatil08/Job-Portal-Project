@@ -17,10 +17,11 @@ const generateToken = (user) => {
 // @access  Public
 const registerUser = async (req, res) => {
   try {
-    const { fullName, email, password, role } = req.body;
+    const { fullName, name, email, password, role } = req.body;
+    const effectiveFullName = (fullName || name || "").trim();
 
     // Validate required fields
-    if (!fullName || !email || !password) {
+    if (!effectiveFullName || !email || !password) {
       return res.status(400).json({
         success: false,
         message: "Please fill in all required fields.",
@@ -68,7 +69,7 @@ const registerUser = async (req, res) => {
 
     // Create user in MongoDB
     const user = await User.create({
-      fullName: fullName.trim(),
+      fullName: effectiveFullName,
       email: normalizedEmail,
       password: hashedPassword,
       role: assignedRole,
@@ -99,6 +100,7 @@ const registerUser = async (req, res) => {
       user: {
         id: user._id,
         fullName: user.fullName,
+        name: user.fullName,
         email: user.email,
         role: user.role,
       },
@@ -175,6 +177,7 @@ const loginUser = async (req, res) => {
       user: {
         id: user._id,
         fullName: user.fullName,
+        name: user.fullName,
         email: user.email,
         role: user.role,
         isBlocked: user.isBlocked || false,
@@ -202,6 +205,7 @@ const getMe = async (req, res) => {
       user: {
         id: user._id,
         fullName: user.fullName,
+        name: user.fullName,
         email: user.email,
         role: user.role,
         isBlocked: user.isBlocked || false,

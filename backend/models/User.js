@@ -53,4 +53,17 @@ const userSchema = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model("User", userSchema);
+// Virtual alias 'name' for backward compatibility
+userSchema
+  .virtual("name")
+  .get(function () {
+    return this.fullName;
+  })
+  .set(function (val) {
+    this.fullName = val;
+  });
+
+userSchema.set("toJSON", { virtuals: true });
+userSchema.set("toObject", { virtuals: true });
+
+module.exports = mongoose.model("User", userSchema);

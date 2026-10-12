@@ -149,6 +149,30 @@
   margin: 0;
 }
 
+.stat-icon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #faf0f6;
+  border-radius: 9px;
+  font-size: 22px;
+}
+
+.stat-box span {
+  display: block;
+  color: #777;
+  font-size: 13px;
+  margin-bottom: 5px;
+}
+
+.stat-box h2 {
+  margin: 0;
+  color: #4d244d;
+  font-size: 23px;
+}
+
 /* Form Styles inside Dashboard */
 .dashboard-form {
   display: grid;
@@ -227,11 +251,109 @@
   background-color: white;
 }
 
+/* Complementary sections for mock/profile dashboards */
+.dashboard-welcome {
+  max-width: 1200px;
+  margin: 0 auto 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dashboard-welcome h1 {
+  margin: 0 0 8px;
+  color: #4d244d;
+  font-size: 30px;
+}
+
+.dashboard-welcome p {
+  margin: 0;
+  color: #777;
+  font-size: 15px;
+}
+
+.browse-btn {
+  height: 46px;
+  padding: 0 24px;
+  border: none;
+  border-radius: 9px;
+  background-color: #6b2f52;
+  color: white;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.browse-btn:hover {
+  background-color: #582542;
+}
+
+.dashboard-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logout-btn {
+  height: 46px;
+  padding: 0 22px;
+  border: 1px solid #6b2f52;
+  border-radius: 9px;
+  background-color: white;
+  color: #6b2f52;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.logout-btn:hover {
+  background-color: #faf3f8;
+}
+
+.dashboard-section,
+.recommended-section {
+  background-color: white;
+  border: 1px solid #eee7eb;
+  border-radius: 10px;
+  padding: 26px;
+  box-sizing: border-box;
+}
+
+.job-placeholder {
+  text-align: center;
+}
+
+.placeholder-icon {
+  font-size: 30px;
+  margin-bottom: 8px;
+}
+
+.job-placeholder h3 {
+  margin: 0 0 7px;
+  color: #4d244d;
+  font-size: 17px;
+}
+
+.job-placeholder p {
+  margin: 0 0 18px;
+  color: #888;
+  font-size: 13px;
+}
+
 @media (max-width: 768px) {
   .dashboard-form {
     grid-template-columns: 1fr;
   }
   .dashboard-form .full-width {
     grid-column: span 1;
+  }
+  .dashboard-welcome {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .dashboard-actions {
+    width: 100%;
+    flex-wrap: wrap;
   }
 }

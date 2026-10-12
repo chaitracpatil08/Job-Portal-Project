@@ -35,6 +35,11 @@ function Register() {
     setError("");
 
     // Client-side validations
+    if (!formData.fullName.trim() && !formData.email.trim() && !formData.password && !formData.confirmPassword) {
+      setError("Please fill in all the fields.");
+      return;
+    }
+
     if (!formData.fullName.trim()) {
       setError("Please enter your full name.");
       return;
@@ -127,8 +132,10 @@ function Register() {
         )}
 
         <form onSubmit={handleSubmit}>
+          {/* Full Name */}
           <div className="form-group">
             <label>Full Name</label>
+
             <input
               type="text"
               name="fullName"
@@ -139,8 +146,10 @@ function Register() {
             />
           </div>
 
+          {/* Email */}
           <div className="form-group">
             <label>Email Address</label>
+
             <input
               type="email"
               name="email"
@@ -151,8 +160,10 @@ function Register() {
             />
           </div>
 
+          {/* Password */}
           <div className="form-group">
             <label>Password</label>
+
             <input
               type="password"
               name="password"
@@ -163,8 +174,10 @@ function Register() {
             />
           </div>
 
+          {/* Confirm Password */}
           <div className="form-group">
             <label>Confirm Password</label>
+
             <input
               type="password"
               name="confirmPassword"
@@ -186,7 +199,7 @@ function Register() {
         </p>
       </div>
 
-      {/* REGISTRATION SUCCESS POPUP MODAL (Requirement 14) */}
+      {/* REGISTRATION SUCCESS POPUP MODAL */}
       {successData && (
         <div className="modal-overlay">
           <div className="success-modal-card">

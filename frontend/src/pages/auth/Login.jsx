@@ -28,8 +28,23 @@ function Login() {
     e.preventDefault();
     setError("");
 
-    if (!formData.email.trim() || !formData.password) {
-      setError("Please enter both email and password.");
+    if (!formData.email.trim() && !formData.password) {
+      setError("Please enter your email address and password.");
+      return;
+    }
+
+    if (!formData.email.trim()) {
+      setError("Please enter your email address.");
+      return;
+    }
+
+    if (!formData.password) {
+      setError("Please enter your password.");
+      return;
+    }
+
+    if (!formData.email.includes("@")) {
+      setError("Please enter a valid email address.");
       return;
     }
 
@@ -80,6 +95,7 @@ function Login() {
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label>Email Address</label>
+
             <input
               type="email"
               name="email"
@@ -92,6 +108,7 @@ function Login() {
 
           <div className="form-group">
             <label>Password</label>
+
             <input
               type="password"
               name="password"
@@ -103,7 +120,13 @@ function Login() {
           </div>
 
           <div className="forgot-password">
-            <a href="#" onClick={(e) => { e.preventDefault(); alert("Password reset link will be sent to your email."); }}>
+            <a
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                alert("Password reset link will be sent to your email.");
+              }}
+            >
               Forgot Password?
             </a>
           </div>

@@ -1,61 +1,208 @@
 .hero {
-  min-height: 430px;
-
-  background-color: #fdf4f8;
-
+  min-height: 520px;
+  background: radial-gradient(circle at 80% 20%, #fdf0f7 0%, #fdf5f9 60%, #faf1f7 100%);
   display: flex;
   align-items: center;
   justify-content: space-between;
-
-  padding: 45px 70px;
-
+  padding: 50px 70px 60px;
   overflow: hidden;
+  position: relative;
+  border-bottom: 1px solid #ebddea;
 }
 
 /* Left */
-
 .hero-content {
-  width: 52%;
+  width: 53%;
+  z-index: 2;
+}
+
+.hero-announcement-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #ffffff;
+  border: 1px solid #e7d1e1;
+  padding: 6px 15px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #6b2f52;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(107, 47, 82, 0.08);
 }
 
 .hero-content h1 {
   margin: 0;
-
-  color: #30203a;
-
+  color: #2e1c31;
   font-family: Georgia, "Times New Roman", serif;
-
-  font-size: 56px;
-  line-height: 1.12;
-  font-weight: 600;
+  font-size: 54px;
+  line-height: 1.15;
+  font-weight: 700;
 }
 
 .hero-content h1 span {
-  color: #8a4a7a;
+  color: #873c68;
+  background: linear-gradient(135deg, #6b2f52 0%, #9e4379 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .hero-content p {
-  margin-top: 22px;
-  margin-bottom: 32px;
-
-  color: #443b45;
-
-  font-size: 18px;
+  margin-top: 18px;
+  margin-bottom: 28px;
+  color: #554a53;
+  font-size: 17.5px;
   line-height: 1.6;
+  max-width: 540px;
+}
+
+/* Trending Tags */
+.hero-trending {
+  margin-top: 22px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.trending-label {
+  font-size: 13px;
+  color: #7a6e78;
+  font-weight: 600;
+}
+
+.trending-tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.trending-tag-pill {
+  font-size: 12.5px;
+  color: #6b2f52;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid #e8d3e2;
+  padding: 4px 12px;
+  border-radius: 16px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.trending-tag-pill:hover {
+  background: #6b2f52;
+  color: #ffffff;
+  border-color: #6b2f52;
+  transform: translateY(-2px);
+  box-shadow: 0 3px 8px rgba(107, 47, 82, 0.2);
 }
 
 /* Right */
-
 .hero-image-container {
-  width: 45%;
-
+  width: 44%;
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
+}
+
+.hero-image-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
 }
 
 .hero-image {
   width: 100%;
-  max-width: 540px;
   height: auto;
+  display: block;
+  filter: drop-shadow(0 15px 30px rgba(80, 40, 70, 0.12));
+}
+
+/* Floating Badges */
+.floating-badge {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  border: 1px solid #ead6e4;
+  border-radius: 12px;
+  padding: 10px 16px;
+  box-shadow: 0 8px 24px rgba(80, 40, 70, 0.12);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  animation: floatAnim 4s ease-in-out infinite alternate;
+}
+
+.badge-top {
+  top: 15px;
+  left: -20px;
+}
+
+.badge-bottom {
+  bottom: 25px;
+  right: -15px;
+  animation-delay: 2s;
+}
+
+@keyframes floatAnim {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-8px);
+  }
+}
+
+.floating-icon {
+  font-size: 22px;
+}
+
+.floating-badge strong {
+  display: block;
+  font-size: 14px;
+  color: #30203a;
+}
+
+.floating-badge p {
+  margin: 0;
+  font-size: 11px;
+  color: #776a75;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .hero {
+    padding: 40px 30px;
+  }
+  .hero-content h1 {
+    font-size: 42px;
+  }
+}
+
+@media (max-width: 850px) {
+  .hero {
+    flex-direction: column;
+    padding: 40px 20px;
+    text-align: center;
+  }
+  .hero-content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .hero-trending {
+    justify-content: center;
+  }
+  .hero-image-container {
+    width: 80%;
+    margin-top: 35px;
+  }
+  .badge-top {
+    left: 0;
+  }
+  .badge-bottom {
+    right: 0;
+  }
 }

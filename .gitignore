@@ -1,0 +1,9 @@
+node_modules/
+.env
+*.log
+.credentials-demo.json
+backend/.credentials-demo.json
+dist/
+dist-ssr/
+build/
+*.local

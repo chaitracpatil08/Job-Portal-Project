@@ -1,0 +1,77 @@
+.company-logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #eee5eb;
+  box-shadow: 0 3px 10px rgba(80, 40, 70, 0.06);
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  flex-shrink: 0;
+}
+
+.company-logo-container:hover {
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 8px 18px rgba(107, 47, 82, 0.15);
+  border-color: #dfc2d6;
+}
+
+/* Sizing presets */
+.company-logo-container.size-sm {
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+}
+
+.company-logo-container.size-md {
+  width: 52px;
+  height: 52px;
+  border-radius: 11px;
+}
+
+.company-logo-container.size-lg {
+  width: 68px;
+  height: 68px;
+  border-radius: 14px;
+}
+
+.company-logo-container.size-xl {
+  width: 88px;
+  height: 88px;
+  border-radius: 18px;
+}
+
+/* SVG logo scaling */
+.company-svg-logo {
+  width: 72%;
+  height: 72%;
+  object-fit: contain;
+  transition: transform 0.25s ease;
+}
+
+.company-logo-container:hover .company-svg-logo {
+  transform: scale(1.06);
+}
+
+/* Fallback letter initials badge */
+.company-fallback-initial {
+  font-size: 22px;
+  font-weight: 800;
+  color: #6b2f52;
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #faf2f7 0%, #f4e3f0 100%);
+}
+
+.company-logo-container.size-lg .company-fallback-initial {
+  font-size: 30px;
+}
+
+.company-logo-container.size-xl .company-fallback-initial {
+  font-size: 38px;
+}

@@ -1,29 +1,29 @@
 .search-bar {
   width: 100%;
-  max-width: 710px;
-  height: 68px;
-
-  background-color: white;
-
-  border: 1px solid #eee5e9;
-  border-radius: 10px;
-
+  max-width: 730px;
+  height: 64px;
+  background-color: #ffffff;
+  border: 1.5px solid #ebddea;
+  border-radius: 12px;
   display: flex;
   align-items: center;
-
-  box-shadow: 0 4px 12px rgba(80, 40, 70, 0.05);
-
+  box-shadow: 0 6px 22px rgba(80, 40, 70, 0.08);
   overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.search-bar:focus-within {
+  border-color: #873c68;
+  box-shadow: 0 8px 28px rgba(107, 47, 82, 0.16);
+  transform: translateY(-2px);
 }
 
 .search-input,
 .location-input {
   height: 100%;
-
   display: flex;
   align-items: center;
-
-  padding: 0 20px;
+  padding: 0 18px;
 }
 
 .search-input {
@@ -31,50 +31,69 @@
 }
 
 .location-input {
-  width: 30%;
-
-  border-left: 1px solid #e7e0e4;
+  width: 32%;
+  border-left: 1px solid #eee0eb;
 }
 
 .search-icon,
 .location-icon {
-  font-size: 27px;
-  color: #756875;
-
+  font-size: 20px;
+  color: #8a7384;
   margin-right: 10px;
 }
 
 .search-input input,
 .location-input input {
   width: 100%;
-
   border: none;
   outline: none;
-
   font-size: 15px;
-  color: #333;
+  color: #2b1d28;
+  background: transparent;
 }
 
 .search-input input::placeholder,
 .location-input input::placeholder {
-  color: #756d75;
+  color: #8c7f8a;
 }
 
 .search-button {
   height: 100%;
-  width: 190px;
-
+  width: 170px;
   border: none;
-
-  background-color: #6b2f52;
+  background: linear-gradient(135deg, #6b2f52 0%, #873c68 100%);
   color: white;
-
-  font-size: 16px;
-  font-weight: 500;
-
+  font-size: 15px;
+  font-weight: 600;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.25s ease;
+  white-space: nowrap;
 }
 
 .search-button:hover {
-  background-color: #582542;
+  background: linear-gradient(135deg, #582542 0%, #75335b 100%);
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.15);
+}
+
+@media (max-width: 650px) {
+  .search-bar {
+    height: auto;
+    flex-direction: column;
+    border-radius: 12px;
+  }
+  .search-input,
+  .location-input {
+    width: 100%;
+    height: 50px;
+    border-left: none;
+    border-bottom: 1px solid #eee0eb;
+  }
+  .search-button {
+    width: 100%;
+    height: 50px;
+  }
 }

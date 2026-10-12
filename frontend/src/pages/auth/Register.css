@@ -1,6 +1,5 @@
 .auth-page {
   min-height: calc(100vh - 90px);
-
   background-color: #faf7fa;
 
   display: flex;
@@ -8,11 +7,12 @@
   justify-content: center;
 
   padding: 50px 20px;
+  position: relative;
 }
 
 .auth-card {
   width: 100%;
-  max-width: 430px;
+  max-width: 440px;
 
   background-color: white;
 
@@ -58,7 +58,52 @@
 
   color: #777;
 
-  margin-bottom: 30px;
+  margin-bottom: 24px;
+}
+
+/* Role Selector */
+.role-selector {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.role-btn {
+  flex: 1;
+  height: 44px;
+  border: 1px solid #e0d2dc;
+  background-color: #fdfafc;
+  color: #665261;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+
+.role-btn.active {
+  background-color: #6b2f52;
+  color: white;
+  border-color: #6b2f52;
+  box-shadow: 0 3px 8px rgba(107, 47, 82, 0.2);
+}
+
+/* Error Alert */
+.auth-error-alert {
+  background-color: #fdf2f2;
+  border: 1px solid #f8b4b4;
+  color: #9b1c1c;
+  padding: 12px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 18px;
 }
 
 .form-group {
@@ -115,9 +160,15 @@
   font-weight: 600;
 
   cursor: pointer;
+  transition: background-color 0.2s ease;
 }
 
-.auth-btn:hover {
+.auth-btn:disabled {
+  background-color: #aa7f99;
+  cursor: not-allowed;
+}
+
+.auth-btn:hover:not(:disabled) {
   background-color: #582542;
 }
 
@@ -137,3 +188,95 @@
   text-decoration: none;
 }
 
+/* ================= SUCCESS MODAL POPUP ================= */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(26, 12, 23, 0.65);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 20px;
+}
+
+.success-modal-card {
+  background-color: white;
+  width: 100%;
+  max-width: 440px;
+  border-radius: 18px;
+  padding: 36px 30px;
+  text-align: center;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  animation: popIn 0.3s ease-out;
+}
+
+@keyframes popIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.success-icon-badge {
+  width: 72px;
+  height: 72px;
+  background-color: #27ae60;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 38px;
+  font-weight: bold;
+  margin: 0 auto 20px;
+  box-shadow: 0 6px 18px rgba(39, 174, 96, 0.3);
+}
+
+.success-modal-card h2 {
+  color: #27ae60;
+  font-size: 26px;
+  margin: 0 0 10px;
+}
+
+.success-modal-message {
+  color: #555;
+  font-size: 15px;
+  margin: 0 0 20px;
+}
+
+.success-user-box {
+  background-color: #faf7fa;
+  border: 1px solid #ebddea;
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 24px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 14px;
+  color: #333;
+}
+
+.modal-proceed-btn {
+  width: 100%;
+  height: 50px;
+  background-color: #6b2f52;
+  color: white;
+  border: none;
+  border-radius: 9px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.modal-proceed-btn:hover {
+  background-color: #582542;
+}

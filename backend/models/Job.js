@@ -58,7 +58,7 @@ const jobSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ["Active", "Closed"],
+      enum: ["Active", "Archived"],
       default: "Active",
     },
   },

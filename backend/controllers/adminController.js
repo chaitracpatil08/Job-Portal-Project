@@ -20,6 +20,7 @@ const getDashboardStats = async (req, res) => {
     const totalCompanies = await EmployerProfile.countDocuments();
     const totalJobs = await Job.countDocuments();
     const activeJobs = await Job.countDocuments({ status: "Active" });
+    const archivedJobs = await Job.countDocuments({ status: "Archived" });
     const totalApplications = await Application.countDocuments();
     const blockedEmployers = await User.countDocuments({ role: "employer", isBlocked: true });
 
@@ -87,6 +88,7 @@ const getDashboardStats = async (req, res) => {
         totalCompanies,
         totalJobs,
         activeJobs,
+        archivedJobs,
         totalApplications,
         blockedEmployers,
         statusBreakdown: {

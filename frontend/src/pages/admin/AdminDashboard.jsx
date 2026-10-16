@@ -409,7 +409,11 @@ function AdminDashboard() {
             </div>
             <div className="stat-box">
               <h3>Active Jobs</h3>
-              <p>{stats?.activeJobs || jobs.filter((j) => j.status === "Active").length}</p>
+              <p>{stats?.activeJobs !== undefined ? stats.activeJobs : jobs.filter((j) => j.status === "Active").length}</p>
+            </div>
+            <div className="stat-box">
+              <h3>Archived Jobs</h3>
+              <p>{stats?.archivedJobs !== undefined ? stats.archivedJobs : jobs.filter((j) => j.status === "Archived").length}</p>
             </div>
             <div className="stat-box">
               <h3>Applications</h3>

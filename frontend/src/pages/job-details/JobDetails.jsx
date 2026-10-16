@@ -334,6 +334,33 @@ function JobDetails() {
           </div>
         </section>
 
+        {job.status === "Archived" && (
+          <div
+            style={{
+              margin: "0 0 24px 0",
+              padding: "16px 22px",
+              backgroundColor: "#fffbeb",
+              border: "1px solid #fef08a",
+              borderLeft: "5px solid #d97706",
+              borderRadius: "8px",
+              color: "#92400e",
+              fontWeight: "600",
+              fontSize: "14px",
+              display: "flex",
+              alignItems: "center",
+              gap: "12px",
+            }}
+          >
+            <span style={{ fontSize: "20px" }}>📦</span>
+            <div>
+              <strong>This job listing has been archived by the employer.</strong>
+              <div style={{ fontWeight: "400", fontSize: "13px", color: "#78350f", marginTop: "3px" }}>
+                It is no longer accepting new applications, but existing candidate applications are securely preserved.
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Main Content */}
         <div className="job-details-container">
           {/* Left Side */}
@@ -513,7 +540,14 @@ function JobDetails() {
 
               <div className="summary-item">
                 <strong>📅 Listing Status</strong>
-                <span style={{ color: "#27ae60", fontWeight: "600" }}>● {job.status || "Active"}</span>
+                <span
+                  style={{
+                    color: job.status === "Active" ? "#27ae60" : "#d97706",
+                    fontWeight: "600",
+                  }}
+                >
+                  {job.status === "Active" ? "● Active" : "📦 Archived"}
+                </span>
               </div>
 
               {/* Action / Apply Button */}
@@ -532,6 +566,11 @@ function JobDetails() {
                     ✓ You Have Applied
                   </p>
                   <ApplicationStatusBadge status={applicationData?.status || "Applied"} />
+                  {job.status === "Archived" && (
+                    <p style={{ margin: "10px 0 0", color: "#92400e", fontSize: "11px", fontWeight: "600" }}>
+                      📦 Note: This job listing has been archived by the employer.
+                    </p>
+                  )}
                 </div>
               ) : isEmployer ? (
                 <div
@@ -547,13 +586,48 @@ function JobDetails() {
                 >
                   🏢 Employer Account View
                 </div>
+              ) : job.status === "Archived" ? (
+                <div
+                  style={{
+                    marginTop: "20px",
+                    padding: "14px",
+                    backgroundColor: "#fef3c7",
+                    border: "1px solid #fcd34d",
+                    borderRadius: "8px",
+                    textAlign: "center",
+                  }}
+                >
+                  <p style={{ margin: "0 0 6px", color: "#92400e", fontWeight: "700", fontSize: "13.5px" }}>
+                    📦 Job Listing Archived
+                  </p>
+                  <p style={{ margin: 0, color: "#78350f", fontSize: "12px", lineHeight: "1.4" }}>
+                    This position has been archived by the employer and is no longer accepting applications.
+                  </p>
+                  <button
+                    disabled
+                    style={{
+                      marginTop: "12px",
+                      width: "100%",
+                      padding: "10px",
+                      backgroundColor: "#e5e7eb",
+                      color: "#6b7280",
+                      border: "none",
+                      borderRadius: "6px",
+                      fontWeight: "600",
+                      cursor: "not-allowed",
+                      fontSize: "14px",
+                    }}
+                  >
+                    Applications Closed
+                  </button>
+                </div>
               ) : (
                 <button
                   className="apply-btn"
                   onClick={handleApplyClick}
                   disabled={job.status !== "Active"}
                 >
-                  {job.status === "Active" ? "Apply Now" : "Listing Closed"}
+                  Apply Now
                 </button>
               )}
             </div>

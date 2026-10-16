@@ -90,6 +90,12 @@ export const jobAPI = {
       method: "DELETE",
     }),
 
+  updateJobStatus: (id, status) =>
+    apiRequest(`/jobs/${id}/status`, {
+      method: "PATCH",
+      body: JSON.stringify({ status }),
+    }),
+
   getMyJobs: () => apiRequest("/jobs/my-jobs"),
 };
 

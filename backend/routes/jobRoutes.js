@@ -6,6 +6,7 @@ const {
   updateJob,
   deleteJob,
   getEmployerJobs,
+  updateJobStatus,
 } = require("../controllers/jobController");
 const authMiddleware = require("../middleware/authMiddleware");
 const roleMiddleware = require("../middleware/roleMiddleware");
@@ -20,6 +21,7 @@ router.get("/:id", getJobById);
 // Protected routes (Employer / Admin)
 router.post("/", authMiddleware, roleMiddleware("employer", "admin"), createJob);
 router.put("/:id", authMiddleware, roleMiddleware("employer", "admin"), updateJob);
+router.patch("/:id/status", authMiddleware, roleMiddleware("employer", "admin"), updateJobStatus);
 router.delete("/:id", authMiddleware, roleMiddleware("employer", "admin"), deleteJob);
 
 module.exports = router;

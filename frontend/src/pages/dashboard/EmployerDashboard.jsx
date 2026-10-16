@@ -10,6 +10,9 @@ import "./Dashboard.css";
 function EmployerDashboard() {
   const { user } = useAuth();
   const [activeTab, setActiveTab] = useState("jobs");
+  const [jobStatusFilter, setJobStatusFilter] = useState("all");
+  const [statusUpdatingId, setStatusUpdatingId] = useState(null);
+  const [actionFeedback, setActionFeedback] = useState({ message: "", type: "" });
 
   // Jobs state
   const [jobs, setJobs] = useState([]);
@@ -152,6 +155,49 @@ function EmployerDashboard() {
     }
   };
 
+  const handleToggleJobStatus = async (jobId, currentStatus, title) => {
+    const newStatus = currentStatus === "Active" ? "Archived" : "Active";
+    const confirmMsg =
+      currentStatus === "Active"
+        ? `Archive "${title}"? This listing will no longer appear in candidate searches or accept applications.`
+        : `Activate "${title}"? This listing will become visible to candidates again.`;
+
+    if (!window.confirm(confirmMsg)) {
+      return;
+    }
+
+    setStatusUpdatingId(jobId);
+    setActionFeedback({ message: "", type: "" });
+
+    try {
+      const res = await jobAPI.updateJobStatus(jobId, newStatus);
+      if (res.success) {
+        setJobs((prev) =>
+          prev.map((j) => (j._id === jobId ? { ...j, status: newStatus } : j))
+        );
+        setActionFeedback({
+          message:
+            res.message ||
+            `Job "${title}" status successfully updated to ${newStatus}.`,
+          type: "success",
+        });
+        setTimeout(() => setActionFeedback({ message: "", type: "" }), 5000);
+      } else {
+        setActionFeedback({
+          message: res.message || "Failed to update job status.",
+          type: "error",
+        });
+      }
+    } catch (err) {
+      setActionFeedback({
+        message: `Could not update job status: ${err.message}`,
+        type: "error",
+      });
+    } finally {
+      setStatusUpdatingId(null);
+    }
+  };
+
   const handleStatusChange = async (appId, newStatus) => {
     try {
       const res = await applicationAPI.updateStatus(appId, newStatus);
@@ -183,6 +229,12 @@ function EmployerDashboard() {
     }
   };
 
+  const filteredJobs = jobs.filter((job) => {
+    if (jobStatusFilter === "active") return job.status === "Active";
+    if (jobStatusFilter === "archived") return job.status === "Archived";
+    return true;
+  });
+
   return (
     <div className="dashboard-page-wrapper">
       <Navbar />
@@ -203,12 +255,34 @@ function EmployerDashboard() {
           </button>
         </div>
 
+        {/* Action feedback message */}
+        {actionFeedback.message && (
+          <div
+            style={{
+              padding: "12px 18px",
+              marginBottom: "16px",
+              borderRadius: "8px",
+              fontWeight: "600",
+              fontSize: "14px",
+              backgroundColor: actionFeedback.type === "success" ? "#f0fdf4" : "#fef2f2",
+              color: actionFeedback.type === "success" ? "#166534" : "#991b1b",
+              border: `1px solid ${actionFeedback.type === "success" ? "#bbf7d0" : "#fecaca"}`,
+            }}
+          >
+            {actionFeedback.message}
+          </div>
+        )}
+
         {/* Overview Stats */}
         <div className="dashboard-content" style={{ marginBottom: 0 }}>
           <div className="stats-grid">
             <div className="stat-box">
               <h3>Active Job Openings</h3>
-              <p>{jobs.length}</p>
+              <p>{jobs.filter((j) => j.status === "Active").length}</p>
+            </div>
+            <div className="stat-box">
+              <h3>Archived Jobs</h3>
+              <p>{jobs.filter((j) => j.status === "Archived").length}</p>
             </div>
             <div className="stat-box">
               <h3>Total Applications Received</h3>
@@ -255,7 +329,68 @@ function EmployerDashboard() {
           {/* TAB 1: POSTED JOBS */}
           {activeTab === "jobs" && (
             <div className="dashboard-card">
-              <h2>My Job Listings</h2>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  flexWrap: "wrap",
+                  gap: "12px",
+                  marginBottom: "16px",
+                }}
+              >
+                <h2>My Job Listings ({filteredJobs.length})</h2>
+                <div style={{ display: "flex", gap: "8px" }}>
+                  <button
+                    type="button"
+                    onClick={() => setJobStatusFilter("all")}
+                    style={{
+                      padding: "6px 14px",
+                      borderRadius: "20px",
+                      border: "1px solid #ddd",
+                      background: jobStatusFilter === "all" ? "#6b2f52" : "#fff",
+                      color: jobStatusFilter === "all" ? "#fff" : "#333",
+                      fontSize: "13px",
+                      cursor: "pointer",
+                      fontWeight: "600",
+                    }}
+                  >
+                    All ({jobs.length})
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setJobStatusFilter("active")}
+                    style={{
+                      padding: "6px 14px",
+                      borderRadius: "20px",
+                      border: "1px solid #ddd",
+                      background: jobStatusFilter === "active" ? "#27ae60" : "#fff",
+                      color: jobStatusFilter === "active" ? "#fff" : "#333",
+                      fontSize: "13px",
+                      cursor: "pointer",
+                      fontWeight: "600",
+                    }}
+                  >
+                    Active ({jobs.filter((j) => j.status === "Active").length})
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setJobStatusFilter("archived")}
+                    style={{
+                      padding: "6px 14px",
+                      borderRadius: "20px",
+                      border: "1px solid #ddd",
+                      background: jobStatusFilter === "archived" ? "#d97706" : "#fff",
+                      color: jobStatusFilter === "archived" ? "#fff" : "#333",
+                      fontSize: "13px",
+                      cursor: "pointer",
+                      fontWeight: "600",
+                    }}
+                  >
+                    Archived ({jobs.filter((j) => j.status === "Archived").length})
+                  </button>
+                </div>
+              </div>
 
               {loadingJobs ? (
                 <p style={{ color: "#777", textAlign: "center", padding: "30px" }}>
@@ -273,6 +408,10 @@ function EmployerDashboard() {
                     Post Your First Job
                   </button>
                 </div>
+              ) : filteredJobs.length === 0 ? (
+                <div style={{ textAlign: "center", padding: "30px", color: "#666" }}>
+                  No {jobStatusFilter} jobs found.
+                </div>
               ) : (
                 <div className="dashboard-table-wrapper">
                   <table className="dashboard-table">
@@ -288,7 +427,7 @@ function EmployerDashboard() {
                       </tr>
                     </thead>
                     <tbody>
-                      {jobs.map((job) => (
+                      {filteredJobs.map((job) => (
                         <tr key={job._id}>
                           <td>
                             <strong>{job.title}</strong>
@@ -312,15 +451,27 @@ function EmployerDashboard() {
                           <td>
                             <span
                               style={{
-                                color: job.status === "Active" ? "#27ae60" : "#777",
-                                fontWeight: "600",
+                                display: "inline-flex",
+                                alignItems: "center",
+                                gap: "5px",
+                                backgroundColor:
+                                  job.status === "Active" ? "#e8f8f0" : "#fef3c7",
+                                color:
+                                  job.status === "Active" ? "#1e7e34" : "#92400e",
+                                border: `1px solid ${
+                                  job.status === "Active" ? "#b7eb8f" : "#fcd34d"
+                                }`,
+                                padding: "4px 10px",
+                                borderRadius: "12px",
+                                fontSize: "12px",
+                                fontWeight: "700",
                               }}
                             >
-                              ● {job.status}
+                              {job.status === "Active" ? "● Active" : "📦 Archived"}
                             </span>
                           </td>
                           <td>
-                            <div style={{ display: "flex", gap: "10px" }}>
+                            <div style={{ display: "flex", gap: "8px", alignItems: "center", flexWrap: "wrap" }}>
                               <Link
                                 to={`/job-details?id=${job._id}`}
                                 style={{
@@ -328,10 +479,50 @@ function EmployerDashboard() {
                                   textDecoration: "none",
                                   fontSize: "13px",
                                   fontWeight: "600",
+                                  padding: "5px 10px",
+                                  border: "1px solid #e2d2db",
+                                  borderRadius: "6px",
                                 }}
                               >
                                 View
                               </Link>
+                              <button
+                                type="button"
+                                onClick={() =>
+                                  handleToggleJobStatus(job._id, job.status, job.title)
+                                }
+                                disabled={statusUpdatingId === job._id}
+                                style={{
+                                  padding: "5px 12px",
+                                  borderRadius: "6px",
+                                  border:
+                                    job.status === "Active"
+                                      ? "1px solid #d97706"
+                                      : "1px solid #27ae60",
+                                  background:
+                                    job.status === "Active" ? "#fffbeb" : "#f0fdf4",
+                                  color:
+                                    job.status === "Active" ? "#b45309" : "#15803d",
+                                  fontSize: "12px",
+                                  fontWeight: "600",
+                                  cursor:
+                                    statusUpdatingId === job._id
+                                      ? "not-allowed"
+                                      : "pointer",
+                                  opacity: statusUpdatingId === job._id ? 0.6 : 1,
+                                }}
+                                title={
+                                  job.status === "Active"
+                                    ? "Archive this job listing"
+                                    : "Activate this job listing"
+                                }
+                              >
+                                {statusUpdatingId === job._id
+                                  ? "Updating..."
+                                  : job.status === "Active"
+                                  ? "Archive Job"
+                                  : "Activate Job"}
+                              </button>
                               <button
                                 onClick={() => handleDeleteJob(job._id)}
                                 className="btn-danger"

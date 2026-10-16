@@ -308,6 +308,64 @@ const getEmployerJobs = async (req, res) => {
   }
 };
 
+// @desc    Update job status (Active / Archived)
+// @route   PATCH /api/jobs/:id/status
+// @access  Private (Employer Owner / Admin)
+const updateJobStatus = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status } = req.body;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(404).json({ success: false, message: "Job not found." });
+    }
+
+    if (!status || !["Active", "Archived"].includes(status)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid status. Status must be either "Active" or "Archived".',
+      });
+    }
+
+    const job = await Job.findById(id);
+    if (!job) {
+      return res.status(404).json({ success: false, message: "Job not found." });
+    }
+
+    // Ensure user is owner or admin
+    if (
+      job.employer.toString() !== req.user._id.toString() &&
+      req.user.role !== "admin"
+    ) {
+      return res.status(403).json({
+        success: false,
+        message: "Not authorized to change status of this job.",
+      });
+    }
+
+    job.status = status;
+    await job.save();
+
+    const successMsg =
+      status === "Active"
+        ? "Job has been activated successfully and is now visible to candidates."
+        : "Job has been archived successfully and is hidden from candidate listings.";
+
+    return res.status(200).json({
+      success: true,
+      message: successMsg,
+      job,
+    });
+  } catch (error) {
+    console.error("Error updating job status:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Failed to update job status.",
+      error: error.message,
+    });
+  }
+};
+
 module.exports = {
   getAllJobs,
   getJobById,
@@ -315,4 +373,5 @@ module.exports = {
   updateJob,
   deleteJob,
   getEmployerJobs,
+  updateJobStatus,
 };

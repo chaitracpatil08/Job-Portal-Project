@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import JobPortalLogo from "../../components/JobPortalLogo";
 import "./Login.css";
 
 function Login() {
@@ -79,7 +80,9 @@ function Login() {
   return (
     <div className="auth-page">
       <div className="auth-card">
-        <div className="auth-logo">💼</div>
+        <div className="auth-logo-center">
+          <JobPortalLogo size="lg" showTagline={true} />
+        </div>
 
         <h1>Welcome Back</h1>
 

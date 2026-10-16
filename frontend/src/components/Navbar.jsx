@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { notificationAPI } from "../services/api";
+import JobPortalLogo from "./JobPortalLogo";
 import "./Navbar.css";
 
 function Navbar() {
@@ -99,50 +100,7 @@ function Navbar() {
   return (
     <nav className="navbar">
       {/* Brand Logo */}
-      <Link to="/" className="brand-logo" style={{ textDecoration: "none" }}>
-        <div className="brand-logo-icon">
-          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect width="40" height="40" rx="10" fill="url(#logoGrad)" />
-            {/* Modern Briefcase & Portal Arrow Motif */}
-            <path
-              d="M14 16V13C14 11.8954 14.8954 11 16 11H24C25.1046 11 26 11.8954 26 13V16"
-              stroke="#FFFFFF"
-              strokeWidth="2.2"
-              strokeLinecap="round"
-            />
-            <rect
-              x="9"
-              y="16"
-              width="22"
-              height="15"
-              rx="4"
-              stroke="#FFFFFF"
-              strokeWidth="2.2"
-              fill="rgba(255,255,255,0.08)"
-            />
-            <path
-              d="M9 21.5C13.5 24 17 24.5 20 24.5C23 24.5 26.5 24 31 21.5"
-              stroke="#FFFFFF"
-              strokeWidth="1.8"
-              strokeLinecap="round"
-            />
-            <circle cx="20" cy="23.5" r="2" fill="#FFD166" />
-            <defs>
-              <linearGradient id="logoGrad" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
-                <stop stopColor="#6b2f52" />
-                <stop offset="0.6" stopColor="#873c68" />
-                <stop offset="1" stopColor="#a3487d" />
-              </linearGradient>
-            </defs>
-          </svg>
-        </div>
-        <div className="brand-text-block">
-          <span className="brand-name">
-            JOB<span className="brand-accent">PORTAL</span>
-          </span>
-          <span className="brand-tagline">CAREER HUB</span>
-        </div>
-      </Link>
+      <JobPortalLogo size="md" />
 
       {/* Navigation Links */}
       <div className="nav-links">

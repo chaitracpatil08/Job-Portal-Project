@@ -1,0 +1,62 @@
+.jobportal-brand-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  transition: transform 0.25s ease;
+  user-select: none;
+}
+
+.jobportal-brand-logo:hover {
+  transform: translateY(-1px) scale(1.015);
+}
+
+.jobportal-logo-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 4px 14px rgba(107, 47, 82, 0.28);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  overflow: hidden;
+}
+
+.jobportal-brand-logo:hover .jobportal-logo-icon {
+  box-shadow: 0 6px 18px rgba(107, 47, 82, 0.38);
+  transform: rotate(2deg);
+}
+
+.jobportal-text-block {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+  text-align: left;
+}
+
+.jobportal-brand-name {
+  color: #30203a;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.jobportal-brand-accent {
+  color: #873c68;
+  background: linear-gradient(135deg, #6b2f52 0%, #a3487d 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.jobportal-brand-tagline {
+  font-weight: 700;
+  color: #997b94;
+  letter-spacing: 2px;
+  margin-top: 2px;
+}
+
+.auth-logo-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 22px;
+}

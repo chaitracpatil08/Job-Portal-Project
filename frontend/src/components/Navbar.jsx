@@ -274,14 +274,26 @@ function Navbar() {
             </button>
           </div>
         ) : (
-          <>
-            <Link to="/login" className="login-btn">
-              Login
+          <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+            <Link to="/login?role=candidate" className="login-btn" title="Sign in as Candidate">
+              Candidate Login
+            </Link>
+            <Link
+              to="/login?role=employer"
+              className="login-btn"
+              style={{
+                backgroundColor: "transparent",
+                color: "#6b2f52",
+                border: "1.5px solid #6b2f52",
+              }}
+              title="Sign in as Employer"
+            >
+              Employer Login
             </Link>
             <Link to="/register" className="register-btn">
               Register
             </Link>
-          </>
+          </div>
         )}
       </div>
     </nav>

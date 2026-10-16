@@ -1,19 +1,28 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { authAPI } from "../../services/api";
 import JobPortalLogo from "../../components/JobPortalLogo";
 import "./Register.css";
 
 function Register() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const urlRole = searchParams.get("role") === "employer" ? "employer" : "jobseeker";
 
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
     password: "",
     confirmPassword: "",
-    role: "jobseeker", // "jobseeker" or "employer"
+    role: urlRole, // "jobseeker" or "employer"
   });
+
+  useEffect(() => {
+    const r = searchParams.get("role");
+    if (r === "employer" || r === "jobseeker") {
+      setFormData((prev) => ({ ...prev, role: r }));
+    }
+  }, [searchParams]);
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");

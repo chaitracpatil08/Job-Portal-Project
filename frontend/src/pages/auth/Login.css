@@ -57,7 +57,75 @@
 
   color: #777;
 
-  margin-bottom: 30px;
+  margin-bottom: 20px;
+}
+
+/* Role Selector */
+.role-selector {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.role-btn {
+  flex: 1;
+  height: 44px;
+  border: 1px solid #e0d2dc;
+  background-color: #fdfafc;
+  color: #665261;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+
+.role-btn:hover {
+  background-color: #f5edf3;
+  border-color: #c9b1c2;
+}
+
+.role-btn.active {
+  background-color: #6b2f52;
+  color: white;
+  border-color: #6b2f52;
+  box-shadow: 0 3px 8px rgba(107, 47, 82, 0.2);
+}
+
+.demo-hint-box {
+  background-color: #fcf8fa;
+  border: 1px dashed #d8bfd0;
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin-bottom: 20px;
+  font-size: 13px;
+  color: #55334c;
+}
+
+.demo-hint-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.demo-hint-btn {
+  background: #6b2f52;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 3px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.demo-hint-btn:hover {
+  background: #873c68;
 }
 
 /* Error Alert */

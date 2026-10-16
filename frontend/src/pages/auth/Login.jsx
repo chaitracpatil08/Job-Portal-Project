@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import JobPortalLogo from "../../components/JobPortalLogo";
 import "./Login.css";
@@ -7,7 +7,21 @@ import "./Login.css";
 function Login() {
   const navigate = useNavigate();
   const location = useLocation();
+  const [searchParams, setSearchParams] = useSearchParams();
   const { login } = useAuth();
+
+  const roleFromUrl = searchParams.get("role");
+  const [loginRole, setLoginRole] = useState(
+    roleFromUrl === "employer" ? "employer" : "jobseeker"
+  );
+
+  useEffect(() => {
+    if (roleFromUrl === "employer") {
+      setLoginRole("employer");
+    } else if (roleFromUrl === "candidate" || roleFromUrl === "jobseeker") {
+      setLoginRole("jobseeker");
+    }
+  }, [roleFromUrl]);
 
   const [formData, setFormData] = useState({
     email: "",
@@ -16,6 +30,17 @@ function Login() {
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+  const handleRoleSwitch = (newRole) => {
+    setLoginRole(newRole);
+    setError("");
+    setSearchParams({ role: newRole === "employer" ? "employer" : "candidate" });
+  };
+
+  const handleQuickFill = (email, password) => {
+    setFormData({ email, password });
+    setError("");
+  };
 
   const handleChange = (e) => {
     setFormData((prev) => ({
@@ -84,9 +109,58 @@ function Login() {
           <JobPortalLogo size="lg" showTagline={true} />
         </div>
 
-        <h1>Welcome Back</h1>
+        <h1>{loginRole === "employer" ? "Employer Login" : "Candidate Login"}</h1>
 
-        <p className="auth-subtitle">Login to continue to JobPortal</p>
+        <p className="auth-subtitle">
+          {loginRole === "employer"
+            ? "Sign in to manage company jobs and review candidates"
+            : "Sign in to apply for jobs and track your applications"}
+        </p>
+
+        {/* Separate Options for Employer and Candidate Login */}
+        <div className="role-selector">
+          <button
+            type="button"
+            className={`role-btn ${loginRole === "jobseeker" ? "active" : ""}`}
+            onClick={() => handleRoleSwitch("jobseeker")}
+          >
+            👤 Candidate Login
+          </button>
+          <button
+            type="button"
+            className={`role-btn ${loginRole === "employer" ? "active" : ""}`}
+            onClick={() => handleRoleSwitch("employer")}
+          >
+            🏢 Employer Login
+          </button>
+        </div>
+
+        {/* Quick Demo Helper Hint */}
+        <div className="demo-hint-box">
+          <div className="demo-hint-header">
+            <strong>
+              {loginRole === "employer" ? "🏢 Demo Employer Account:" : "👤 Demo Candidate Account:"}
+            </strong>
+            <button
+              type="button"
+              className="demo-hint-btn"
+              onClick={() =>
+                loginRole === "employer"
+                  ? handleQuickFill("employer@example.com", "password123")
+                  : handleQuickFill("jobseeker@example.com", "password123")
+              }
+            >
+              Fill Credentials
+            </button>
+          </div>
+          <div>
+            <code>
+              {loginRole === "employer"
+                ? "employer@example.com / password123"
+                : "jobseeker@example.com / password123"}
+            </code>
+          </div>
+        </div>
 
         {error && (
           <div className="auth-error-alert" role="alert">
@@ -97,12 +171,18 @@ function Login() {
 
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label>Email Address</label>
+            <label>
+              {loginRole === "employer" ? "Company / Employer Email" : "Candidate Email Address"}
+            </label>
 
             <input
               type="email"
               name="email"
-              placeholder="Enter your email"
+              placeholder={
+                loginRole === "employer"
+                  ? "Enter company email (e.g. employer@example.com)"
+                  : "Enter your candidate email (e.g. jobseeker@example.com)"
+              }
               value={formData.email}
               onChange={handleChange}
               required
@@ -127,7 +207,7 @@ function Login() {
               href="#"
               onClick={(e) => {
                 e.preventDefault();
-                alert("Password reset link will be sent to your email.");
+                alert("Password reset instructions will be sent to your registered email.");
               }}
             >
               Forgot Password?
@@ -135,14 +215,29 @@ function Login() {
           </div>
 
           <button type="submit" className="auth-btn" disabled={loading}>
-            {loading ? "Logging in..." : "Login"}
+            {loading
+              ? "Signing In..."
+              : loginRole === "employer"
+              ? "Sign In as Employer"
+              : "Sign In as Candidate"}
           </button>
         </form>
 
         <p className="switch-auth">
-          Don't have an account?
-          <Link to="/register"> Register</Link>
+          Don't have an account?{" "}
+          {loginRole === "employer" ? (
+            <Link to="/register?role=employer">Register as Employer</Link>
+          ) : (
+            <Link to="/register?role=jobseeker">Register as Candidate</Link>
+          )}
         </p>
+
+        <div style={{ marginTop: "14px", textAlign: "center", fontSize: "12px", color: "#888" }}>
+          Looking for administrator portal?{" "}
+          <Link to="/admin" style={{ color: "#6b2f52", fontWeight: "600", textDecoration: "none" }}>
+            Admin Control Panel
+          </Link>
+        </div>
       </div>
     </div>
   );
